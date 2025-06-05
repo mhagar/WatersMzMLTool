@@ -1,0 +1,6 @@
+molmass==2025.4.14
+numpy==2.2.5
+pyopenms==3.3.0
+pyqt5==5.15.11
+pyqtgraph==0.13.7
+scipy==1.15.2
