@@ -4,16 +4,46 @@ This is a CLI/GUI tool for re-calibrating Waters `.mzML` files, as well as
 fixing incorrect metadata generated when exporting `.mzML` files from a 
 XevoMRT instrument.
 
+## What's wrong with Waters .mzML files?
+
+When converting Waters `.raw` files into `.mzML` files using MSConvert, the 
+lockmass scans are often left in the final output. This causes bugs in data 
+processing software like MZMine:
+![Bug often seen in .mzML files generated from data acquired on Waters instruments](docs/waters_lockmass_scan_bug.svg)
+
+It should be noted that this issue can be fixed solely using MSConvert. 
+See [these instructions](https://github.com/mhagar/WatersMzMLTool/blob/master/docs/Properly_MSConverting_Waters_RAW_data.pdf).
+
+While MSConvert *can* be used to remove the lockmass scans, it only supports
+single-point calibration. This tool also allows users to calibrate using an 
+arbitrary number of signals, and *then* remove the lockmass scans (so that the
+files play more politely with non-Waters MS processing software)
 
 ## Why re-calibrate?
 ![Comparison of data calibrated by vendor vs calibrated using this tool](docs/calibration_comparison_2.svg)
-*Generated from an LC/MS dataset acquired on the Xevo XMRT, which is specc'd for 0.5 ppm RSME*
+*Generated from an LC/MS dataset acquired on the Xevo XMRT, which is specc'd 
+for 0.5 ppm RSME*
 
-The .mzML files exported using Waters' default software leaves a lot on the table. This tool allows users
-to calibrate using an arbitrary number of calibrants
+The .mzML files exported using Waters' default software leaves a lot on the 
+table. This only seems to be an issue with the exported data - that is, the 
+m/z values in the `.mzML` files are slightly different from the values given 
+by the native software.
+
+This tool attempts to bridge the gap.
+
+---
+
+## How to: Install
+If using Windows or Linux (Debian), you can just download and launch the binary 
+from the [releases page](https://github.com/mhagar/WatersMzMLTool/releases).
+
+Otherwise, install the repo into a virtual environment and run 
+`waters_mzml_tools.py`. Instructions for  building your own binaries are in 
+[BUILD.md](https://github.com/mhagar/WatersMzMLTool/blob/master/BUILD.md).
 
 
-## How to: retain lockmass scans when exporting from Waters instruments
+
+## How to: Retain lockmass scans when exporting from Waters instruments
 
 This section is not exhaustive. I've tested `.mzML` exports on two Waters 
 instruments: Synapt G2-Si, and Xevo MRT.
@@ -30,7 +60,7 @@ instruments: Synapt G2-Si, and Xevo MRT.
 all scans to be incorrectly labeled as `ms_level = 1`. This tool can fix that.
 
 
-## How to: apply double lockmass correction
+## How to: Apply double lockmass correction
 
 !['Adjust .mzML files' Tab](docs/Adjust_MzML_Files.png)
 
