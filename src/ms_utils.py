@@ -9,7 +9,7 @@ import pyopenms as oms
 
 def get_spectrum_type(
     spec: oms.MSSpectrum,
-) -> Literal["ms1", "ms2", "cal"]:
+) -> Literal["ms1", "ms2", "cal", None]:
     """
     TODO: This assumes DIA (i.e. three scan functions)
     Parameters
@@ -31,6 +31,9 @@ def get_spectrum_type(
 
     if "function=3" in spec_id:
         return "cal"
+
+    if not spec_id:
+        return None
 
     raise ValueError(
         f"Unable to determine spectrum type given spec_id: {spec_id}"

@@ -58,6 +58,11 @@ def accumulate_corrected_spectra(
     most_recent_cal_params: Iterable = []
 
     for spectrum in spectra:
+        # If spectrum is empty, skip it
+        if spectrum.size() == 0:
+            # corrected_spectra.append(spectrum)
+            continue
+
         # If calibration spectrum, update calibration params
         if get_spectrum_type(spectrum) == "cal":
             cal_params, num_cal_signals = get_calibration_params(
@@ -174,6 +179,7 @@ def apply_global_spline_correction(
     )
     calmzs = np.array(calmzs)
 
+    print('hi')
     # Get calibration params using combined signals
     calibration_spline = get_spline(
         mz_values=calmzs[:, 0],
