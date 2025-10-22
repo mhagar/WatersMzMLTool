@@ -49,6 +49,34 @@ def fix_missing_ms_level_labels(
 
     return adjusted_exp
 
+def apply_centroiding(
+    ms_experiment: oms.MSExperiment,
+) -> oms.MSExperiment:
+    """
+    Wrapper around OpenMS's PeakPickerIterative.
+    # TODO: Add parameters!
+
+    Parameters
+    ----------
+    ms_experiment:      oms.MSExperiment
+
+
+    Returns
+    -------
+    an MSExperiment containing centroided spectra
+    """
+    adjusted_exp: oms.MSExperiment = deepcopy(ms_experiment)
+    # adjusted_spectra: list[oms.MSSpectrum] = []
+
+    picker_iterative = oms.PeakPickerIterative()
+
+    picker_iterative.pickExperiment(
+        input=ms_experiment,
+        output=adjusted_exp,
+    )
+
+    return adjusted_exp
+
 
 def native_id_to_ms_level(
     native_id: str,

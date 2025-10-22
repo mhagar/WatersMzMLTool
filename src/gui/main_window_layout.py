@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main_window_layout.ui'
+# Form implementation generated from reading ui file 'src/gui/main_window_layout.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -79,6 +79,9 @@ class Ui_MainWindow(object):
         self.checkRemoveLockmassScans = QtWidgets.QCheckBox(self.groupBox)
         self.checkRemoveLockmassScans.setObjectName("checkRemoveLockmassScans")
         self.verticalLayout_3.addWidget(self.checkRemoveLockmassScans)
+        self.checkApplyCentroiding = QtWidgets.QCheckBox(self.groupBox)
+        self.checkApplyCentroiding.setObjectName("checkApplyCentroiding")
+        self.verticalLayout_3.addWidget(self.checkApplyCentroiding)
         self.checkFixMSLevels = QtWidgets.QCheckBox(self.groupBox)
         self.checkFixMSLevels.setObjectName("checkFixMSLevels")
         self.verticalLayout_3.addWidget(self.checkFixMSLevels)
@@ -155,7 +158,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 882, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 882, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -185,6 +188,7 @@ class Ui_MainWindow(object):
         self.comboExperimentType.setItemText(0, _translate("MainWindow", "DIA"))
         self.groupBox.setTitle(_translate("MainWindow", ".mzML Formation Parameters"))
         self.checkRemoveLockmassScans.setText(_translate("MainWindow", "Remove Lockmass scans from output"))
+        self.checkApplyCentroiding.setText(_translate("MainWindow", "Apply centroiding"))
         self.checkFixMSLevels.setText(_translate("MainWindow", "Fix MS level metadata (for XMRT data)"))
         self.groupCalibrate.setTitle(_translate("MainWindow", "Calibrate using Lockmass Scans"))
         self.spinSearchWindow.setSuffix(_translate("MainWindow", " Da"))

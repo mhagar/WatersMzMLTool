@@ -9,15 +9,16 @@ from PyQt5.QtWidgets import QApplication
 import pyopenms as oms
 
 import src.calibration as calibration
-import src.gui_mode as gui_mode
 import src.file_utils as file_utils
 from src.waters_utils import fix_missing_ms_level_labels
+from src.waters_utils import apply_centroiding
 from src.calibration_utils import remove_lockmass_scans
 
 import sys
 import argparse
 import json
 from pathlib import Path
+from copy import deepcopy
 from typing import Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     from pyqtgraph import GraphicsLayoutWidget
@@ -56,6 +57,14 @@ def _setup_parser() -> argparse.ArgumentParser:
              'Note: dda not yet implemented',
         choices=['dda', 'dia'],
         default='dia',
+    )
+
+
+    parser.add_argument(
+        '--centroid',
+        help='Apply centroiding if given profile data. '
+             'This uses OpenMS PeakPickerIterative, with default settings',
+        action='store_true',
     )
 
     parser.add_argument(
@@ -137,15 +146,24 @@ def process_mzml_file_cli(
     )
 
     # Initialize empty MSExperiment
-    adjusted_exp = oms.MSExperiment()
+    # adjusted_exp = oms.MSExperiment()
+    adjusted_exp = deepcopy(exp)
 
     # Adjust MS levels if requested
     if args.add_ms_levels:
         print('Adding ms levels..')
         adjusted_exp: oms.MSExperiment = fix_missing_ms_level_labels(
-            ms_experiment=exp,
+            ms_experiment=adjusted_exp,
             experiment_type=args.experiment_type,
         )
+
+    # Centroid if requested
+    if args.centroid:
+        print('Centroiding..')
+        adjusted_exp: oms.MSExperiment = apply_centroiding(
+            ms_experiment=adjusted_exp,
+        )
+
 
     # Calibrate MS spectra if requested
     if args.calibrants:
@@ -232,6 +250,9 @@ def process_mzml_file_cli(
 
 
 def main():
+    import src.gui_mode as gui_mode
+    # Importing here to avoid circular
+
     parser: argparse.ArgumentParser = _setup_parser()
     args: argparse.Namespace = parser.parse_args()
 

@@ -25,6 +25,7 @@ class Parameters:
     output_dir: Path
     remove_lockmass_scans: bool
     fix_ms_levels: bool
+    centroid: bool
     calibrate: bool
     calibrant_file_dir: Path
     calibrant_file_formulae: bool
@@ -38,6 +39,9 @@ class Parameters:
 
         if self.fix_ms_levels: args += ['--add-ms-levels']
         if self.output_dir: args += ['--output', str(self.output_dir)]
+
+        if self.centroid:
+            args += ['--centroid']
 
         if self.calibrate:
             args += ['--calibrants', str(self.calibrant_file_dir)]
@@ -129,6 +133,7 @@ class MainWindow(
             output_dir=self.lineOutputDir.text(),
             remove_lockmass_scans=self.checkRemoveLockmassScans.isChecked(),
             fix_ms_levels=self.checkFixMSLevels.isChecked(),
+            centroid=self.checkApplyCentroiding.isChecked(),
             calibrate=self.groupCalibrate.isChecked(),
             calibrant_file_dir=self.lineCalibrantDir.text(),
             calibrant_file_formulae=self.checkCalibrantFormulae.isChecked(),

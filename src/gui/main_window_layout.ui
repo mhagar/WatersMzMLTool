@@ -146,6 +146,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QCheckBox" name="checkApplyCentroiding">
+               <property name="text">
+                <string>Apply centroiding</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QCheckBox" name="checkFixMSLevels">
                <property name="text">
                 <string>Fix MS level metadata (for XMRT data)</string>
@@ -322,7 +329,7 @@
      <x>0</x>
      <y>0</y>
      <width>882</width>
-     <height>30</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
